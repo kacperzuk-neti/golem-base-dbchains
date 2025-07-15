@@ -1,0 +1,3 @@
+[submodule "golembase-op-geth"]
+	path = golembase-op-geth
+	url = https://github.com/Golem-Base/golembase-op-geth.git
