@@ -13,3 +13,5 @@ deleteme=$(./golembase entity create --data "$(date): data that will be deleted"
 
 updateme=$(./golembase entity create --data "$(date): data that will be updated" --btl 1000 | awk '{ print $NF }')
 ./golembase entity update --key $updateme --data "$(date): data that was updated" --btl 2000
+
+./golembase entity delete --key 0xdeadbeaf # we want to see a failed transaction onchain
