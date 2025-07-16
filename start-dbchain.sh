@@ -6,7 +6,7 @@ cd "$(dirname "$0")"
 
 git submodule update --init
 
-cd blockscout-rs-neti
+cd blockscout-rs-neti/golem-base-tools/
 cargo build
 
 cd ../golembase-op-geth

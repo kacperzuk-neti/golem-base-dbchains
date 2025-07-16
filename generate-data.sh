@@ -13,7 +13,7 @@ updateme2=$(./golembase entity create --data "$(date +%s) - data that will be up
 extendme=$(./golembase entity create --data "$(date +%s) - data that will be extended" --btl 1000 | awk '{ print $NF }')
 sender=$(cat ~/.config/golembase/private.key | od -An -v -tx1 | tr -d ' \n')
 
-cd "$pwd"/blockscout-rs-neti/crates/gen-test-data
+cd "$pwd"/blockscout-rs-neti/golem-base-tools/crates/gen-test-data
 calldata=$(cargo run -- \
   create:"$(date +%s) - data that will expire immediately":1 \
   create:"$(date +%s) - data with annotations":1000:key=val:key2=123 \
