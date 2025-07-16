@@ -1,7 +1,8 @@
 Requirements:
 
 * docker + docker compose
-* go 1.23+
+* Go 1.23+
+* Rust 1.88+
 
 Usage:
 

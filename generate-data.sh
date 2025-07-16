@@ -2,16 +2,27 @@
 
 set -euo pipefail
 
-cd "$(dirname "$0")"/golembase-op-geth/cmd/golembase
+cd "$(dirname "$0")"
 
-./golembase entity create --data "$(date): data that will expire almost immediately" --btl 1 -s key1:value1 -n key2:123
+pwd="$(pwd)"
+cd "$pwd"/golembase-op-geth/cmd/golembase
 
-./golembase entity create --data "$(date): data with annotations" --btl 1000 -s key1:value1 -n key2:123
+deleteme=$(./golembase entity create --data "$(date +%s) - data that will be deleted" --btl 1000 | awk '{ print $NF }')
+updateme1=$(./golembase entity create --data "$(date +%s) - data that will be updated" --btl 1000 | awk '{ print $NF }')
+updateme2=$(./golembase entity create --data "$(date +%s) - data that will be updated with annotations" --btl 1000 | awk '{ print $NF }')
+extendme=$(./golembase entity create --data "$(date +%s) - data that will be extended" --btl 1000 | awk '{ print $NF }')
+sender=$(cat ~/.config/golembase/private.key | od -An -v -tx1 | tr -d ' \n')
 
-deleteme=$(./golembase entity create --data "$(date): data that will be deleted" --btl 1000 | awk '{ print $NF }')
-./golembase entity delete --key $deleteme
+cd "$pwd"/blockscout-rs-neti/crates/gen-test-data
+calldata=$(cargo run -- \
+  create:"$(date +%s) - data that will expire immediately":1 \
+  create:"$(date +%s) - data with annotations":1000:key=val:key2=123 \
+  update:$updateme1:"$(date +%s) - updated data":2000 \
+  update:$updateme2:"$(date +%s) - updated data with annotations":2000:key=updated:updated=1 \
+  delete:$deleteme \
+  extend:$extendme:2001)
 
-updateme=$(./golembase entity create --data "$(date): data that will be updated" --btl 1000 | awk '{ print $NF }')
-./golembase entity update --key $updateme --data "$(date): data that was updated" --btl 2000
+cast send --private-key $sender 0x0000000000000000000000000000000060138453 $calldata
 
-./golembase entity delete --key 0xdeadbeaf # we want to see a failed transaction onchain
+cd "$pwd"/golembase-op-geth/cmd/golembase
+./golembase entity delete --key 0xdeadbeaf &>/dev/null # we want to see a failed transaction onchain and make sure we expire data created in previous tx

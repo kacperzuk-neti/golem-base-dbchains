@@ -5,7 +5,11 @@ set -euo pipefail
 cd "$(dirname "$0")"
 
 git submodule update --init
-cd golembase-op-geth
+
+cd blockscout-rs-neti
+cargo build
+
+cd ../golembase-op-geth
 docker compose up -d
 
 cd cmd/golembase

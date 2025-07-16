@@ -1,3 +1,6 @@
 [submodule "golembase-op-geth"]
 	path = golembase-op-geth
 	url = https://github.com/Golem-Base/golembase-op-geth.git
+[submodule "blockscout-rs-neti"]
+	path = blockscout-rs-neti
+	url = git@github.com:Golem-Base/blockscout-rs-neti.git
