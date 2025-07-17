@@ -9,7 +9,8 @@ git submodule update --init
 cd blockscout-rs-neti/golem-base-tools/
 cargo build
 
-cd ../golembase-op-geth
+cd ../../golembase-op-geth
+patch < ../golembase-op-geth-enable-txpool-api.diff
 docker compose up -d
 
 cd cmd/golembase
