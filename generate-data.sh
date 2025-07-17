@@ -11,7 +11,21 @@ deleteme=$(./golembase entity create --data "$(date +%s) - data that will be del
 updateme1=$(./golembase entity create --data "$(date +%s) - data that will be updated" --btl 1000 | awk '{ print $NF }')
 updateme2=$(./golembase entity create --data "$(date +%s) - data that will be updated with annotations" --btl 1000 | awk '{ print $NF }')
 extendme=$(./golembase entity create --data "$(date +%s) - data that will be extended" --btl 1000 | awk '{ print $NF }')
-sender=$(cat ~/.config/golembase/private.key | od -An -v -tx1 | tr -d ' \n')
+
+linux_path=~/.config/golembase/private.key
+mac_path=~/Library/Application\ Support/golembase/private.key
+
+private_key_path=""
+if [ -f "$linux_path" ]; then
+    private_key_path="$linux_path"
+elif [ -f "$mac_path" ]; then
+    private_key_path="$mac_path"
+else
+    echo "Error: Private key not found."
+    exit 1
+fi
+sender=$(cat "$private_key_path" | od -An -v -tx1 | tr -d ' \n')
+
 
 cd "$pwd"/blockscout-rs-neti/golem-base-tools/crates/gen-test-data
 calldata=$(cargo run -- \
