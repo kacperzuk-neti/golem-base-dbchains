@@ -10,7 +10,7 @@ cd blockscout-rs-neti/golem-base-tools/
 cargo build
 
 cd ../../golembase-op-geth
-patch < ../golembase-op-geth-enable-txpool-api.diff
+patch -N < ../golembase-op-geth-enable-txpool-api.diff || true
 docker compose up -d
 
 cd cmd/golembase
