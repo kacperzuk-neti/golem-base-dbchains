@@ -10,9 +10,10 @@ cd blockscout-rs-neti/golem-base-tools/
 cargo build
 
 cd ../../golembase-op-geth
-patch -N < ../golembase-op-geth-enable-txpool-api.diff || true
-patch -N < ../golembase-op-geth-rpclorer-external-port.diff || true
-docker compose up -d
+patch -N <../golembase-op-geth-enable-txpool-api.diff || true
+patch -N <../golembase-op-geth-rpclorer-external-port.diff || true
+patch -N <../golembase-op-geth-all-interfaces.diff || true
+docker compose up -d --build
 
 cd cmd/golembase
 go build -o golembase
