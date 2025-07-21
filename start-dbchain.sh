@@ -20,5 +20,5 @@ go build -o golembase
 ./golembase account fund
 
 echo
-echo "Running. Visit http://localhost:8080/ to verify."
+echo "Running. Visit http://localhost:9000/ to verify."
 echo "RPC endpoint available at http://localhost:8545 and ws://localhost:8545"
