@@ -11,6 +11,7 @@ cargo build
 
 cd ../../golembase-op-geth
 patch -N < ../golembase-op-geth-enable-txpool-api.diff || true
+patch -N < ../golembase-op-geth-rpclorer-external-port.diff || true
 docker compose up -d
 
 cd cmd/golembase
